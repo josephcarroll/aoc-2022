@@ -7,36 +7,34 @@ object Day2 extends App {
   case object Paper extends Move(2)
   case object Scissors extends Move(3)
 
-  sealed trait State
-  case object Lose extends State
-  case object Draw extends State
-  case object Win extends State
+  sealed abstract class State(val worth: Int)
+  case object Lose extends State(0)
+  case object Draw extends State(3)
+  case object Win extends State(6)
 
   case class Round(opponentMove: Move, response: Move, expected: State) {
     def score: Int = {
       val winScore = (opponentMove, response) match {
-        case (x, y) if x == y => 3 // draw
-        case (Rock, Scissors) => 0
-        case (Paper, Rock) => 0
-        case (Scissors, Paper) => 0
-        case (Rock, Paper) => 6
-        case (Paper, Scissors) => 6
-        case (Scissors, Rock) => 6
+        case (x, y) if x == y => Draw.worth
+        case (Rock, Scissors) => Lose.worth
+        case (Paper, Rock) => Lose.worth
+        case (Scissors, Paper) => Lose.worth
+        case (Rock, Paper) => Win.worth
+        case (Paper, Scissors) => Win.worth
+        case (Scissors, Rock) => Win.worth
       }
       response.worth + winScore
     }
 
     def newScore: Int = {
       (opponentMove, expected) match {
-        case (Rock, Lose) => 0 + Scissors.worth
-        case (Paper, Lose) => 0 + Rock.worth
-        case (Scissors, Lose) => 0 + Paper.worth
-
-        case (x, Draw) => 3 + x.worth
-
-        case (Rock, Win) => 6 + Paper.worth
-        case (Paper, Win) => 6 + Scissors.worth
-        case (Scissors, Win) => 6 + Rock.worth
+        case (x, Draw) => Draw.worth + x.worth
+        case (Rock, Lose) => Lose.worth + Scissors.worth
+        case (Paper, Lose) => Lose.worth + Rock.worth
+        case (Scissors, Lose) => Lose.worth + Paper.worth
+        case (Rock, Win) => Win.worth + Paper.worth
+        case (Paper, Win) => Win.worth + Scissors.worth
+        case (Scissors, Win) => Win.worth + Rock.worth
       }
     }
   }
