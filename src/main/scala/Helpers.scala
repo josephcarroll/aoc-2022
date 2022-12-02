@@ -1,25 +1,23 @@
 package joe.aoc
 
-import scala.collection.mutable.ArrayBuffer
+import scala.annotation.tailrec
 
 object Helpers {
 
-  def readInput(name: String): Iterator[String] = {
-    io.Source.fromResource(name).getLines()
+  def readInput(name: String): Seq[String] = {
+    io.Source.fromResource(name).getLines().toSeq
   }
 
-  def splitCollection[T](input: Iterator[T], sentinelValue: T): Seq[Seq[T]] = {
-    val results = new ArrayBuffer[ArrayBuffer[T]]()
-    var current = new ArrayBuffer[T]()
-    input.foreach { line =>
-      if (line == sentinelValue) {
-        current = new ArrayBuffer[T]()
-        results.append(current)
+  def splitCollection[T](input: Seq[T], sentinelValue: T): Seq[Seq[T]] = {
+    @tailrec def split(result: Seq[Seq[T]], remainder: Seq[T]): Seq[Seq[T]] = {
+      if (remainder.isEmpty) {
+        result
       } else {
-        current.append(line)
+        val (l, r) = remainder.span(_ != sentinelValue)
+        split(result :+ l, r.drop(1))
       }
     }
-    results.map(_.toSeq).toSeq
+    split(Seq(), input)
   }
 
 }
