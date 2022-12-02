@@ -8,7 +8,7 @@ object Helpers {
     io.Source.fromResource(name).getLines().toSeq
   }
 
-  def splitCollection[T](input: Seq[T], sentinelValue: T): Seq[Seq[T]] = {
+  def splitBySentinel[T](input: Seq[T], sentinelValue: T): Seq[Seq[T]] = {
     @tailrec def split(result: Seq[Seq[T]], remainder: Seq[T]): Seq[Seq[T]] = {
       if (remainder.isEmpty) {
         result
