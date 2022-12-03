@@ -2,7 +2,7 @@ package joe.aoc
 
 object Day1 extends App {
 
-  val input = Helpers.readInput("day1-input.txt")
+  val input = Helpers.readInput(1)
   val elves = Helpers.splitBySentinel(input, sentinelValue = "").map(_.map(_.toInt))
 
   println(elves.map(_.sum).max)

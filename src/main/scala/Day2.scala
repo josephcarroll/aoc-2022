@@ -15,15 +15,13 @@ object Day2 extends App {
   case class Round(opponentMove: Move, response: Move, expected: State) {
     def score: Int = {
       val winScore = (opponentMove, response) match {
-        case (x, y) if x == y => Draw.worth
-        case (Rock, Scissors) => Lose.worth
-        case (Paper, Rock) => Lose.worth
-        case (Scissors, Paper) => Lose.worth
-        case (Rock, Paper) => Win.worth
-        case (Paper, Scissors) => Win.worth
-        case (Scissors, Rock) => Win.worth
+        case (x, y) if x == y => Draw
+        case (Rock, Scissors) => Lose
+        case (Paper, Rock) => Lose
+        case (Scissors, Paper) => Lose
+        case _ => Win
       }
-      response.worth + winScore
+      response.worth + winScore.worth
     }
 
     def newScore: Int = {
@@ -39,7 +37,7 @@ object Day2 extends App {
     }
   }
 
-  val lines = Helpers.readInput("day2-input.txt")
+  val lines = Helpers.readInput(2)
   val rounds = lines.map { line =>
     val Array(opponentMoveString, responseString) = line.split(" ")
     val opponentMove = opponentMoveString match {

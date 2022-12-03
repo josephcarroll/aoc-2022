@@ -2,7 +2,7 @@ package joe.aoc
 
 object Day3 extends App {
 
-  val items = Helpers.readInput("day3-input.txt")
+  val items = Helpers.readInput(3)
 
   def toSet(input: String): Set[Char] = Set(input.toCharArray: _*)
   def priorityOf(input: Char): Int = {

@@ -4,7 +4,9 @@ import scala.annotation.tailrec
 
 object Helpers {
 
-  def readInput(name: String): Seq[String] = {
+  def readInput(day: Int): Seq[String] = {
+    println(s"Day $day!")
+    val name = s"day$day-input.txt"
     io.Source.fromResource(name).getLines().toSeq
   }
 
