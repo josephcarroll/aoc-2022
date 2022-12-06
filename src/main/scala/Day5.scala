@@ -6,19 +6,7 @@ object Day5 extends App {
 
   val items = Helpers.readInput(5)
 
-  val (setup, instructions) = items.span(_ != "")
-
-  """
-    |[N] [G]                     [Q]
-    |[H] [B]         [B] [R]     [H]
-    |[S] [N]     [Q] [M] [T]     [Z]
-    |[J] [T]     [R] [V] [H]     [R] [S]
-    |[F] [Q]     [W] [T] [V] [J] [V] [M]
-    |[W] [P] [V] [S] [F] [B] [Q] [J] [H]
-    |[T] [R] [Q] [B] [D] [D] [B] [N] [N]
-    |[D] [H] [L] [N] [N] [M] [D] [D] [B]
-    | 1   2   3   4   5   6   7   8   9
-    |""".stripMargin
+  val (_, instructions) = items.span(_ != "")
 
   val state = Seq(
     mutable.Stack("N", "H", "S", "J", "F", "W", "T", "D"),
@@ -48,5 +36,6 @@ object Day5 extends App {
   state.foreach { stack =>
     print(stack.top)
   }
+  println()
 
 }
