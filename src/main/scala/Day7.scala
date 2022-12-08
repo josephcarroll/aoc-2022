@@ -10,14 +10,13 @@ object Day7 extends App {
   case class LsResponse(size: Int, isDirectory: Boolean, name: String)
 
   object CommandParser extends RegexParsers {
-    override def skipWhitespace: Boolean = true
 
     def cdCommand: Parser[CdCommand] = ("$" ~> "cd" ~> """[\w./]+""".r) ^^ CdCommand
     def lsCommand: Parser[LsCommand] = "$" ~> "ls" ~> rep1(dirResponse | fileResponse) ^^ LsCommand
-    def dirResponse: Parser[LsResponse] = "dir" ~> "\\w+".r ^^ { name =>
+    def dirResponse: Parser[LsResponse] = "dir" ~> """\w+""".r ^^ { name =>
       LsResponse(-1, isDirectory = true, name)
     }
-    def fileResponse: Parser[LsResponse] = "\\d+".r ~ """[\w.]+""".r ^^ { case size ~ name =>
+    def fileResponse: Parser[LsResponse] = """\d+""".r ~ """[\w.]+""".r ^^ { case size ~ name =>
       LsResponse(size.toInt, isDirectory = false, name)
     }
 
@@ -27,8 +26,8 @@ object Day7 extends App {
 
   }
 
-  val lines = Helpers.readInput(7)
-  val parsed = CommandParser.process(lines.mkString("\n"))
+  val input = Helpers.readEntireInput(7)
+  val parsed = CommandParser.process(input)
 
   var currentParent = Seq[String]()
   val directorySizes = collection.mutable.HashMap[Seq[String], Int]()

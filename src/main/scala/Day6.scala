@@ -1,10 +1,8 @@
 package joe.aoc
 
-import scala.collection.mutable
-
 object Day6 extends App {
 
-  val line = Helpers.readInput(6).head
+  val line = Helpers.readEntireInput(6)
 
   def find(markerLength: Int): Int = {
     val matched = line.sliding(markerLength).zipWithIndex.collectFirst {

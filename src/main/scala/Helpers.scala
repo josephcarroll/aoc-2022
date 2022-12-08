@@ -9,6 +9,10 @@ object Helpers {
     io.Source.fromResource(name).getLines().toSeq
   }
 
+  def readEntireInput(day: Int): String = {
+    readInput(day).mkString("\n")
+  }
+
   def splitBySentinel[T](input: Seq[T], sentinelValue: T): Seq[Seq[T]] = {
     @tailrec def split(result: Seq[Seq[T]], remainder: Seq[T]): Seq[Seq[T]] = {
       if (remainder.isEmpty) {
