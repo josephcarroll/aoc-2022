@@ -76,8 +76,8 @@ object Day13 extends App {
     compare(x, y).get
   }
 
-  val a = sorted.indexOf(PacketList(Seq(PacketList(Seq(PacketValue(2)))))) + 1
-  val b = sorted.indexOf(PacketList(Seq(PacketList(Seq(PacketValue(6)))))) + 1
+  val a = sorted.indexOf(PacketParser.process("[[2]]")) + 1
+  val b = sorted.indexOf(PacketParser.process("[[6]]")) + 1
   println(a * b)
 
 }
