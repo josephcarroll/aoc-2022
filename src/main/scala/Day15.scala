@@ -35,11 +35,11 @@ object Day15 extends App {
     notXs.map(_.x).toSet
   }
 
-//  println(checkYLine(2000000).size)
+  println(checkYLine(2000000).size)
 
-  val bobMax = 4000000
+  val maxCoordinate = 4000000
 
-  for (y <- 0 to bobMax) {
+  for (y <- 0 to maxCoordinate) {
 
     val intervals = combos.flatMap { case Combo(sensor, beacon) =>
       val totalDistance = distanceBetween(sensor, beacon)
@@ -48,7 +48,7 @@ object Day15 extends App {
       val start = sensor.x - remainingDistance
       val end = sensor.x + remainingDistance
       if (start < end) {
-        Some((Math.max(0, start), Math.min(end, bobMax)))
+        Some((start, end))
       } else {
         None
       }
@@ -58,8 +58,6 @@ object Day15 extends App {
     var maxSeen = sorted.head._1
     sorted.foreach { case (start, end) =>
       if (start > maxSeen) {
-        println(maxSeen)
-        println(y)
         println((maxSeen.longValue * 4000000) + y)
       }
       maxSeen = Math.max(maxSeen, end)
